@@ -1,0 +1,11 @@
+import http from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const root = new URL('./', import.meta.url);
+const files = { '/': ['index.html', 'text/html'], '/src/app.js': ['src/app.js', 'text/javascript'], '/src/style.css': ['src/style.css', 'text/css'], '/src/data.js': ['src/data.js', 'text/javascript'] };
+http.createServer(async (req, res) => {
+  const file = files[new URL(req.url, 'http://localhost').pathname];
+  if (!file) { res.writeHead(404); res.end('Ikke fundet'); return; }
+  try { const body = await readFile(fileURLToPath(new URL(file[0], root))); res.writeHead(200, {'Content-Type': `${file[1]}; charset=utf-8`, 'X-Content-Type-Options': 'nosniff'}); res.end(body); }
+  catch { res.writeHead(500); res.end('Kunne ikke indlæse siden'); }
+}).listen(Number(process.env.PORT || 3000), '0.0.0.0', () => console.log('Sakinah kører på port ' + (process.env.PORT || 3000)));
