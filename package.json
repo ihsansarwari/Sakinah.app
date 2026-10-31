@@ -3,5 +3,5 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "node server.mjs", "start": "node server.mjs", "test": "node --test" }
+  "scripts": { "dev": "node server.mjs", "start": "node server.mjs", "test": "node --test", "import:restaurants": "node scripts/import-restaurants.mjs" }
 }
