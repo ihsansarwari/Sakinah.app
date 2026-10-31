@@ -2,7 +2,15 @@
 
 Dansk, responsiv prototype til at finde spisesteder ud fra personlige præferencer. Siden viser 426 importerede OpenStreetMap-poster fra Odense-området (restauranter, caféer og takeaway). Det er ikke en fuldstændig oversigt eller en liste over verificerede halal-restauranter. Adresser mangler i det aktuelle udtræk; åbning og drift er ikke kontrolleret.
 
-## Start
+## Online med GitHub Pages
+
+På GitHub: Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **main**, mappe **/(root)** → Save. Repositoryet skal have GitHub Pages til rådighed på den aktuelle plan. En Pages-side er normalt offentlig; den indeholder kun prototypens statiske filer og offentlige OSM-data. Ingen login- eller hemmelighedsoplysninger skal lægges i checkoutet.
+
+Forventet adresse er `https://ihsansarwari.github.io/Sakinah.app/`, når GitHub har gennemført første deployment. GitHub viser den aktive adresse under Settings → Pages. Nye pushes til main udløser efterfølgende opdateringer automatisk; det kan tage nogle minutter, før en genindlæsning viser ændringen. Import af nye restaurantdata sker stadig separat; en genindlæsning henter det senest gemte katalog, ikke en ny Overpass-import.
+
+Projektet bruger relative aktivstier og `.nojekyll`, så de statiske filer også virker under repositoryets undermappe. Der kræves hverken Node.js eller Python på den besøgendes computer.
+
+## Lokal start
 
 Kræver Node.js 22 eller nyere. Ingen eksterne pakker er nødvendige.
 
