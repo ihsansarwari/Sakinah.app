@@ -10,8 +10,6 @@ Forventet adresse er `https://ihsansarwari.github.io/Sakinah.app/`, når GitHub 
 
 Projektet bruger relative aktivstier og `.nojekyll`, så de statiske filer også virker under repositoryets undermappe. Der kræves hverken Node.js eller Python på den besøgendes computer.
 
-## Lokal start
-
 ## Madfotos
 
 Restaurantkort bruger nu udvalgte, eksternt hostede Unsplash-madfotos efter køkkentype. De mærkes altid “Illustrationsfoto — ikke fra restauranten”. Ved ukendt eller ikke-understøttet køkken bruges et generelt grøntsagsfoto. Billederne dokumenterer hverken stedets faktiske menu eller halal-status. Se `src/food-photos.js` for billedadresser og `https://unsplash.com/license` for billedlicensen. Intet Google-abonnement eller API-nøgle bruges. Der er ingen lokal kopi; hvis billedtjenesten er utilgængelig, vises en neutral fejltilstand. Livehentning af billeder kunne ikke verificeres i cloudmiljøet, fordi `images.unsplash.com` er blokeret af miljøets netværkspolitik. Browserkontrollen bruger simulerede billedsvar.
@@ -28,7 +26,7 @@ Serveren lytter på port 3000; brug `PORT` til at vælge en anden port. Kør `np
 
 ## Funktioner
 
-Søg på navn, køkken og område; filtrér på by; vælg kriterier for halal-kød, alkoholservering, baggrundsmusik, afskærmet siddeområde og bøn. Se kun fulde match eller alle resultater med individuelle statusser. Restaurantprofiler viser også ukendte forhold.
+Udforsk køkkenkategorier, søg på navn og område, gem favoritter på denne enhed, og sortér efter navn eller oplysningsmængde. Profiler har kildebaserede kontaktlinks, kort og en kopierbar besøgstjekliste. Vælg kriterier for halal-kød, alkoholservering, baggrundsmusik, afskærmet siddeområde og bøn. Se kun fulde match eller alle resultater med individuelle statusser. Restaurantprofiler viser også ukendte forhold. Ukendte kriterier beskrives som afventende oplysninger frem for en negativ vurdering. Favoritter gemmes kun i browserens lokale lager og synkroniseres ikke mellem enheder.
 
 Et match er ikke en religiøs afgørelse eller halal-certificering. Ukendt tæller ikke som opfyldt. Siden bruger lokale fallback-skrifttyper og kræver ingen eksterne skrifttjenester.
 
@@ -41,6 +39,14 @@ node scripts/import-restaurants.mjs --input /sti/til/udtraek.json
 ```
 
 Websiden indlæser `data/restaurants.osm.json`. Importen opdaterer dette katalog. Bevar OSM-kilde, importdato, attribution og ODbL-licens. `diet:halal` bevares kun som en uverificeret kildepåstand; ingen kriterier markeres som opfyldte automatisk. Importdato er ikke en kontroldato. Mislykkede eller tomme udtræk erstatter ikke eksisterende data. Forskellige OSM-objekter kan stadig repræsentere samme restaurant og skal gennemgås før publicering. `src/data.js` indeholder fortsat isolerede testeksempler; de vises ikke i appen. Forsidens statiske fallback skal regenereres ved katalogændringer, hvis den også skal vise de nye poster uden JavaScript.
+
+## Kontroller og koncept
+
+Kør `node scripts/browser-smoke.mjs` for browserkontrol af den præcise Pages-undermappe, søgning, kategorier, lokale favoritter, sortering, profiler, kort, nulstilling og mobilbredder. Playwright installeres separat i `/tmp/sakinah-browser` (se scriptets vejledning); det er ikke en produktionsafhængighed. Eksterne billed- og kortsvar simuleres og dokumenterer ikke tjenesternes aktuelle tilgængelighed.
+
+Kataloget har stadig 426 OSM-poster. Berigelsen bevarer rå køkkenværdier og kildens snapshotdato; kategorierne oversættes til dansk. Der findes 215 hjemmesidelinks, 7 menulinks, 156 telefonfelter og 200 åbningstidsfelter. 22 poster er markeret som mulige dubletter til manuel gennemgang, men ingen er fjernet automatisk. Disse oplysninger er ikke bekræftet med restauranterne.
+
+Se [konceptforslaget](docs/concept.md) for prioritering af en Odense-pilot, dokumentation pr. kriterium og en plan for brugertest. Det er forslag, ikke observerede brugerresultater.
 
 ## Næste produkttrin
 

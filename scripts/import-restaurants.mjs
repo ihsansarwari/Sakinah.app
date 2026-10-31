@@ -3,11 +3,12 @@ import { pathToFileURL } from 'node:url';
 import { resolve, dirname } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import {cuisineDetails, publicWebsite, validCoordinates, markDuplicateCandidates, qualitySummary} from './restaurant-quality.mjs';
 
 export function convert(payload, importedAt = new Date().toISOString()) {
   if (!payload || !Array.isArray(payload.elements) || payload.remark) throw new Error('Ufuldstændigt eller ugyldigt Overpass-svar; eksisterende data bevares.');
   const seen = new Set();
-  return payload.elements.flatMap(element => {
+  const restaurants = payload.elements.flatMap(element => {
     const t = element.tags || {};
     if (!['restaurant','fast_food','cafe'].includes(t.amenity) || !t.name?.trim() || !['node','way','relation'].includes(element.type) || !Number.isSafeInteger(element.id)) return [];
     const id = `osm-${element.type}-${element.id}`;
@@ -15,19 +16,28 @@ export function convert(payload, importedAt = new Date().toISOString()) {
     seen.add(id);
     return [{
       id, name:t.name.trim(), city:t['addr:city'] || 'By ikke oplyst',
-      coordinates: Number.isFinite(element.lat ?? element.center?.lat) && Number.isFinite(element.lon ?? element.center?.lon)
-        ? {lat:element.lat ?? element.center.lat, lon:element.lon ?? element.center.lon} : null,
+      coordinates:validCoordinates(element),
+      coordinateSource:validCoordinates(element) ? element.type==='node' ? 'osm-node' : 'osm-object-center' : null,
       area:[t['addr:street'],t['addr:housenumber']].filter(Boolean).join(' ') || 'Adresse ikke oplyst',
-      cuisine:t.cuisine?.replaceAll(';',', ') || 'Køkken ikke oplyst', price:'Pris ikke oplyst',
+      ...cuisineDetails(t.cuisine,t.amenity), price:'Pris ikke oplyst',
+      amenity:t.amenity,
+      website:publicWebsite(t.website || t['contact:website']),
+      menuUrl:publicWebsite(t['website:menu'] || t['contact:menu']),
+      phone:typeof (t.phone || t['contact:phone'])==='string' ? (t.phone || t['contact:phone']).trim() : null,
+      openingHours:typeof t.opening_hours==='string' ? t.opening_hours : null,
+      businessUnitReference:typeof t['ref:DK:cvr:pnummer']==='string' ? t['ref:DK:cvr:pnummer'] : null,
       icon:'◒', color:'olive', description:'Grundoplysninger fra OpenStreetMap. Restaurantens aktuelle forhold er ikke kontrolleret af Sakinah.',
       halal:null, alcohol:null, music:null, seating:null, prayer:null,
-      source:{name:'OpenStreetMap',url:`https://www.openstreetmap.org/${element.type}/${element.id}`,license:'ODbL 1.0',importedAt},
+      source:{name:'OpenStreetMap',url:`https://www.openstreetmap.org/${element.type}/${element.id}`,license:'ODbL 1.0',importedAt,
+        snapshotAt:payload.osm3s?.timestamp_osm_base || null,
+        reportedCheckDate:typeof t.check_date==='string' ? t.check_date : null},
       reportedHalal:t['diet:halal'] || null,
       photoReference: typeof t.wikimedia_commons === 'string' && t.wikimedia_commons.startsWith('File:')
         ? `https://commons.wikimedia.org/wiki/${encodeURIComponent(t.wikimedia_commons)}` : null,
       verification:'unverified'
     }];
   });
+  return markDuplicateCandidates(restaurants);
 }
 
 async function main() {
@@ -59,6 +69,8 @@ async function main() {
     license:'https://opendatacommons.org/licenses/odbl/1-0/',
     source:'https://www.openstreetmap.org/copyright',
     scope:'Uverificerede grundoplysninger. Ingen garanti for fuldstændighed eller halal-status.',
+    queryArea:{name:'Odense-området',bbox:[55.33,10.25,55.46,10.52],administrativeBoundary:false},
+    quality:qualitySummary(restaurants),
     restaurants
   }, null, 2) + '\n');
   await rename(destination + '.tmp', destination);
