@@ -3,3 +3,5 @@
 .restaurant-map{margin:22px 0;padding:18px;background:#eef0e6;border-radius:8px}.restaurant-map h3{margin-top:0}.restaurant-map iframe{display:block;width:100%;height:270px;border:1px solid var(--line);border-radius:6px}.map-actions{display:flex;gap:20px;flex-wrap:wrap;margin:16px 0;font-size:12px;text-decoration:underline}#map-container{padding:12px 0}.map-consent{margin-top:10px}
 
 .card-photo{position:relative;background:#e9eadf;min-height:174px}.street-view-photo{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain}.photo-caption{display:block;padding:7px 12px;font-size:9px;color:#627160;background:#f0f1e8}.photo-unavailable{min-height:174px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#697661}.photo-unavailable>span{font-size:32px}.photo-unavailable p{margin:8px 0;font-size:11px}
+
+.food-photo{display:block;width:100%;height:200px;object-fit:cover}.photo-caption{font-size:10px;line-height:1.5}.card-photo{background:#e9eadf}

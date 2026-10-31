@@ -12,13 +12,9 @@ Projektet bruger relative aktivstier og `.nojekyll`, så de statiske filer også
 
 ## Lokal start
 
-## Aktivér Google Street View-fotos
+## Madfotos
 
-Integrationen er klar, men ingen Google-billeder hentes, før en browsernøgle er konfigureret. Opret et Google Cloud-projekt, aktivér fakturering og **Street View Static API**, og opret en dedikeret API-nøgle. Begræns nøglen med **Websites / HTTP referrers** til `https://ihsansarwari.github.io/*` og med **API restrictions** til **Street View Static API**. Denne nøgle bliver synlig i browseren; brug aldrig en ubegrænset nøgle eller en servernøgle. Konfigurér kvoter og budgetbeskeder i Google Cloud (budgetbeskeder stopper ikke automatisk forbrug).
-
-På GitHub kan `src/site-config.js` redigeres med blyanten: indsæt den begrænsede browsernøgle mellem de tomme anførselstegn i `googleStreetViewKey`, og commit ændringen til main. Del ikke nøglen i chatten. Pages opdaterer derefter automatisk siden. Nøglen må kun aktiveres, hvis Googles gældende vilkår passer til brugen.
-
-Fotos hentes direkte fra Google uden lokal kopiering. Hele billedet og Googles attribution bevares; kortene bruger lazy loading. Når Google-nøglen er aktiv, erstattes det indlejrede OSM-kort på profilerne med et Google Maps-link. Billedet er et gadefoto nær koordinaterne, ikke en verificeret facade. Manglende dækning, kvote- eller nøglefejl viser en neutral fejltilstand. Fotos er endnu ikke livevalideret med en rigtig Google-nøgle.
+Restaurantkort bruger nu udvalgte, eksternt hostede Unsplash-madfotos efter køkkentype. De mærkes altid “Illustrationsfoto — ikke fra restauranten”. Ved ukendt eller ikke-understøttet køkken bruges et generelt grøntsagsfoto. Billederne dokumenterer hverken stedets faktiske menu eller halal-status. Se `src/food-photos.js` for billedadresser og `https://unsplash.com/license` for billedlicensen. Intet Google-abonnement eller API-nøgle bruges. Der er ingen lokal kopi; hvis billedtjenesten er utilgængelig, vises en neutral fejltilstand. Livehentning af billeder kunne ikke verificeres i cloudmiljøet, fordi `images.unsplash.com` er blokeret af miljøets netværkspolitik. Browserkontrollen bruger simulerede billedsvar.
 
 ## Lokal server
 
@@ -48,6 +44,6 @@ Websiden indlæser `data/restaurants.osm.json`. Importen opdaterer dette katalog
 
 ## Næste produkttrin
 
-Restaurantprofilerne har nu koordinater, kortvisning efter klik og links til stort OpenStreetMap-kort og rutevejledning. Kortet er et geografisk kort, ikke et gadefoto. OSM-midtpunkter kan afvige fra indgangen. En enkelt Commons-billedhenvisning findes i det aktuelle udtræk; den vises som et eksternt link, ikke et indlejret foto uden afklaret attribution/licens. De øvrige kortbilleder er fortsat tydeligt markerede illustrationer. Browserkontrollen tester kortknappen med et simuleret eksternt iframe-svar; den bekræfter ikke korttjenestens tilgængelighed i brugerens browser.
+Restaurantprofilerne har koordinater, kortvisning efter klik og links til stort OpenStreetMap-kort og rutevejledning. Kortet er et geografisk kort, ikke et gadefoto. OSM-midtpunkter kan afvige fra indgangen. En enkelt Commons-billedhenvisning vises som et eksternt link. Google Street View-integrationen er fjernet.
 
 Der er endnu ingen database, login eller administrationsside. Før offentlig lancering kræves kilde og kontroldato pr. kriterium, dokumentation af halal-forhold, proces til rettelser og verificering samt en særskilt beslutning om en eventuel samlet rating. Mobilversionen er en responsiv hjemmeside; der er endnu ingen native app.
