@@ -1,6 +1,6 @@
 # Sakinah
 
-Dansk, responsiv prototype til at finde restauranter ud fra personlige præferencer. Alle restauranter og oplysninger er **fiktive eksempeldata**.
+Dansk, responsiv prototype til at finde spisesteder ud fra personlige præferencer. Siden viser 426 importerede OpenStreetMap-poster fra Odense-området (restauranter, caféer og takeaway). Det er ikke en fuldstændig oversigt eller en liste over verificerede halal-restauranter. Adresser mangler i det aktuelle udtræk; åbning og drift er ikke kontrolleret.
 
 ## Start
 
@@ -26,8 +26,8 @@ Et match er ikke en religiøs afgørelse eller halal-certificering. Ukendt tæll
 node scripts/import-restaurants.mjs --input /sti/til/udtraek.json
 ```
 
-Importen er et forberedelsestrin: den ændrer ikke websidens demooversigt. Bevar OSM-kilde, importdato, attribution og ODbL-licens ved senere integration. `diet:halal` bevares kun som en uverificeret kildepåstand; ingen kriterier markeres som opfyldte automatisk. Importdato er ikke en kontroldato. Mislykkede eller tomme udtræk erstatter ikke eksisterende data. Forskellige OSM-objekter kan stadig repræsentere samme restaurant og skal gennemgås før publicering.
+Websiden indlæser `data/restaurants.osm.json`. Importen opdaterer dette katalog. Bevar OSM-kilde, importdato, attribution og ODbL-licens. `diet:halal` bevares kun som en uverificeret kildepåstand; ingen kriterier markeres som opfyldte automatisk. Importdato er ikke en kontroldato. Mislykkede eller tomme udtræk erstatter ikke eksisterende data. Forskellige OSM-objekter kan stadig repræsentere samme restaurant og skal gennemgås før publicering. `src/data.js` indeholder fortsat isolerede testeksempler; de vises ikke i appen. Forsidens statiske fallback skal regenereres ved katalogændringer, hvis den også skal vise de nye poster uden JavaScript.
 
 ## Næste produkttrin
 
-Der er endnu ingen database, rigtige restaurantdata, login eller administrationsside. Før offentlig lancering kræves en lovligt anvendelig datakilde, kilde og kontroldato pr. kriterium, dokumentation af halal-forhold, proces til rettelser og verificering samt en særskilt beslutning om en eventuel samlet rating. Mobilversionen er en responsiv hjemmeside; der er endnu ingen native app.
+Der er endnu ingen database, login eller administrationsside. Før offentlig lancering kræves kilde og kontroldato pr. kriterium, dokumentation af halal-forhold, proces til rettelser og verificering samt en særskilt beslutning om en eventuel samlet rating. Mobilversionen er en responsiv hjemmeside; der er endnu ingen native app.
