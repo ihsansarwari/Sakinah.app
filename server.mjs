@@ -2,7 +2,7 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root = new URL('./', import.meta.url);
-const files = { '/': ['index.html', 'text/html'], '/src/app.js': ['src/app.js', 'text/javascript'], '/src/style.css': ['src/style.css', 'text/css'], '/src/data.js': ['src/data.js', 'text/javascript'], '/src/catalog.js': ['src/catalog.js', 'text/javascript'], '/data/restaurants.osm.json': ['data/restaurants.osm.json', 'application/json'] };
+const files = { '/src/site-config.js': ['src/site-config.js', 'text/javascript'], '/src/street-view.js': ['src/street-view.js', 'text/javascript'], '/': ['index.html', 'text/html'], '/src/app.js': ['src/app.js', 'text/javascript'], '/src/style.css': ['src/style.css', 'text/css'], '/src/data.js': ['src/data.js', 'text/javascript'], '/src/catalog.js': ['src/catalog.js', 'text/javascript'], '/data/restaurants.osm.json': ['data/restaurants.osm.json', 'application/json'] };
 http.createServer(async (req, res) => {
   const file = files[new URL(req.url, 'http://localhost').pathname];
   if (!file) { res.writeHead(404); res.end('Ikke fundet'); return; }

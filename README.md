@@ -12,6 +12,16 @@ Projektet bruger relative aktivstier og `.nojekyll`, så de statiske filer også
 
 ## Lokal start
 
+## Aktivér Google Street View-fotos
+
+Integrationen er klar, men ingen Google-billeder hentes, før en browsernøgle er konfigureret. Opret et Google Cloud-projekt, aktivér fakturering og **Street View Static API**, og opret en dedikeret API-nøgle. Begræns nøglen med **Websites / HTTP referrers** til `https://ihsansarwari.github.io/*` og med **API restrictions** til **Street View Static API**. Denne nøgle bliver synlig i browseren; brug aldrig en ubegrænset nøgle eller en servernøgle. Konfigurér kvoter og budgetbeskeder i Google Cloud (budgetbeskeder stopper ikke automatisk forbrug).
+
+På GitHub kan `src/site-config.js` redigeres med blyanten: indsæt den begrænsede browsernøgle mellem de tomme anførselstegn i `googleStreetViewKey`, og commit ændringen til main. Del ikke nøglen i chatten. Pages opdaterer derefter automatisk siden. Nøglen må kun aktiveres, hvis Googles gældende vilkår passer til brugen.
+
+Fotos hentes direkte fra Google uden lokal kopiering. Hele billedet og Googles attribution bevares; kortene bruger lazy loading. Når Google-nøglen er aktiv, erstattes det indlejrede OSM-kort på profilerne med et Google Maps-link. Billedet er et gadefoto nær koordinaterne, ikke en verificeret facade. Manglende dækning, kvote- eller nøglefejl viser en neutral fejltilstand. Fotos er endnu ikke livevalideret med en rigtig Google-nøgle.
+
+## Lokal server
+
 Kræver Node.js 22 eller nyere. Ingen eksterne pakker er nødvendige.
 
 ```sh
