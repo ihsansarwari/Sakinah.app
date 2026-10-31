@@ -30,4 +30,6 @@ Websiden indlæser `data/restaurants.osm.json`. Importen opdaterer dette katalog
 
 ## Næste produkttrin
 
+Restaurantprofilerne har nu koordinater, kortvisning efter klik og links til stort OpenStreetMap-kort og rutevejledning. Kortet er et geografisk kort, ikke et gadefoto. OSM-midtpunkter kan afvige fra indgangen. En enkelt Commons-billedhenvisning findes i det aktuelle udtræk; den vises som et eksternt link, ikke et indlejret foto uden afklaret attribution/licens. De øvrige kortbilleder er fortsat tydeligt markerede illustrationer. Browserkontrollen tester kortknappen med et simuleret eksternt iframe-svar; den bekræfter ikke korttjenestens tilgængelighed i brugerens browser.
+
 Der er endnu ingen database, login eller administrationsside. Før offentlig lancering kræves kilde og kontroldato pr. kriterium, dokumentation af halal-forhold, proces til rettelser og verificering samt en særskilt beslutning om en eventuel samlet rating. Mobilversionen er en responsiv hjemmeside; der er endnu ingen native app.

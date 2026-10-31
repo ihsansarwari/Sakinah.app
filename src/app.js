@@ -1,5 +1,5 @@
 import {criteria, match, filterRestaurants} from './data.js';
-import {escapeHTML as esc, safeSourceURL} from './catalog.js';
+import {escapeHTML as esc, safeSourceURL, mapLinks, safePhotoReference} from './catalog.js';
 let restaurants = [];
 let loadError = false;
 try {
@@ -38,7 +38,8 @@ results.addEventListener('click',e=>{
   if(e.target.closest('#reset')) {document.querySelector('#query').value='';document.querySelector('#city').value='';document.querySelector('#strict').checked=false;render();return;}
   const button=e.target.closest('[data-id]');if(!button)return;
   const r=restaurants.find(item=>item.id===button.dataset.id);
-  document.querySelector('#detail-content').innerHTML=`<p class="eyebrow">RESTAURANTPROFIL · IKKE VERIFICERET</p><h2 id="dialog-title">${esc(r.name)}</h2><p>${esc(r.cuisine)} · ${esc(r.area)} · ${esc(r.city === "By ikke oplyst" ? "Odense-området" : r.city)} · ${esc(r.price)}</p><p>${esc(r.description)}</p><div class="detail-list">${criteria.map(c=>`<div><div><strong>${c.label}</strong><p>${c.explanation}</p></div><span class="status ${r[c.key]===true?'yes':r[c.key]===false?'no':'unknown'}">${statusLabel(r[c.key])}</span></div>`).join('')}</div><p class="detail-note">${safeSourceURL(r.source?.url) ? `<a href="${esc(safeSourceURL(r.source.url))}" target="_blank" rel="noopener noreferrer">Se stedet på OpenStreetMap ↗</a>` : "Kildelink mangler"}<br>Importeret: ${esc(r.source?.importedAt ? new Date(r.source.importedAt).toLocaleDateString("da-DK", {timeZone:"Europe/Copenhagen"}) : "Ukendt dato")}. Importdatoen er ikke en verificeringsdato. Halal-status, åbning og øvrige forhold skal bekræftes med restauranten.</p>`;
+  const maps = mapLinks(r.coordinates);
+  document.querySelector('#detail-content').innerHTML=`<p class="eyebrow">RESTAURANTPROFIL · IKKE VERIFICERET</p><h2 id="dialog-title">${esc(r.name)}</h2><p>${esc(r.cuisine)} · ${esc(r.area)} · ${esc(r.city === "By ikke oplyst" ? "Odense-området" : r.city)} · ${esc(r.price)}</p><p>${esc(r.description)}</p>${safePhotoReference(r.photoReference) ? `<p><a class="photo-reference" href="${esc(safePhotoReference(r.photoReference))}" target="_blank" rel="noopener noreferrer">Se billedhenvisning på Wikimedia Commons ↗</a><br>Henvisning fra OpenStreetMap. Fotoets kilde og brugsbetingelser fremgår på Wikimedia.</p>` : ""}${maps ? `<section class="restaurant-map"><h3>Find restauranten</h3><p>Kort over placeringen — ikke et foto af facaden.</p><div id="map-container"><button class="primary" id="show-map" data-map="${esc(maps.embed)}">Vis interaktivt kort</button><p class="map-consent">Kortet hentes fra OpenStreetMap, når du klikker.</p></div><div class="map-actions"><a href="${esc(maps.full)}" target="_blank" rel="noopener noreferrer">Åbn stort kort ↗</a><a href="${esc(maps.directions)}" target="_blank" rel="noopener noreferrer">Få rutevejledning ↗</a></div><p>Placeringen kommer fra OpenStreetMap og kan være upræcis. For bygninger vises objektets midtpunkt.</p></section>` : `<p>Kortplacering mangler. Brug kildelinket nedenfor for at undersøge stedet.</p>`}<div class="detail-list">${criteria.map(c=>`<div><div><strong>${c.label}</strong><p>${c.explanation}</p></div><span class="status ${r[c.key]===true?'yes':r[c.key]===false?'no':'unknown'}">${statusLabel(r[c.key])}</span></div>`).join('')}</div><p class="detail-note">${safeSourceURL(r.source?.url) ? `<a href="${esc(safeSourceURL(r.source.url))}" target="_blank" rel="noopener noreferrer">Se stedet på OpenStreetMap ↗</a>` : "Kildelink mangler"}<br>Importeret: ${esc(r.source?.importedAt ? new Date(r.source.importedAt).toLocaleDateString("da-DK", {timeZone:"Europe/Copenhagen"}) : "Ukendt dato")}. Importdatoen er ikke en verificeringsdato. Halal-status, åbning og øvrige forhold skal bekræftes med restauranten.</p>`;
   dialog.setAttribute('aria-labelledby','dialog-title');dialog.showModal();
 });
 document.querySelector('.close').addEventListener('click',()=>dialog.close());
@@ -46,3 +47,14 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
 render();
 
 if (loadError) { document.querySelector(".demo-notice").textContent = "Restaurantdata kunne ikke indlæses. Genindlæs siden, eller kontrollér at serveren kører fra projektmappen."; results.innerHTML = "<div class=\"empty\"><h3>Restaurantdata er ikke tilgængelige</h3><p>Prøv at genindlæse siden.</p></div>"; }
+
+document.querySelector("#detail-content").addEventListener("click", e => {
+  const button = e.target.closest("#show-map");
+  if (!button) return;
+  const frame = document.createElement("iframe");
+  frame.src = button.dataset.map;
+  frame.title = "Kort over restaurantens placering";
+  frame.loading = "lazy";
+  frame.referrerPolicy = "no-referrer";
+  document.querySelector("#map-container").replaceChildren(frame);
+});

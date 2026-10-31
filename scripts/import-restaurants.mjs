@@ -15,12 +15,16 @@ export function convert(payload, importedAt = new Date().toISOString()) {
     seen.add(id);
     return [{
       id, name:t.name.trim(), city:t['addr:city'] || 'By ikke oplyst',
+      coordinates: Number.isFinite(element.lat ?? element.center?.lat) && Number.isFinite(element.lon ?? element.center?.lon)
+        ? {lat:element.lat ?? element.center.lat, lon:element.lon ?? element.center.lon} : null,
       area:[t['addr:street'],t['addr:housenumber']].filter(Boolean).join(' ') || 'Adresse ikke oplyst',
       cuisine:t.cuisine?.replaceAll(';',', ') || 'Køkken ikke oplyst', price:'Pris ikke oplyst',
       icon:'◒', color:'olive', description:'Grundoplysninger fra OpenStreetMap. Restaurantens aktuelle forhold er ikke kontrolleret af Sakinah.',
       halal:null, alcohol:null, music:null, seating:null, prayer:null,
       source:{name:'OpenStreetMap',url:`https://www.openstreetmap.org/${element.type}/${element.id}`,license:'ODbL 1.0',importedAt},
       reportedHalal:t['diet:halal'] || null,
+      photoReference: typeof t.wikimedia_commons === 'string' && t.wikimedia_commons.startsWith('File:')
+        ? `https://commons.wikimedia.org/wiki/${encodeURIComponent(t.wikimedia_commons)}` : null,
       verification:'unverified'
     }];
   });
@@ -36,7 +40,7 @@ async function main() {
   if (inputIndex >= 0) payload = JSON.parse(await readFile(args[inputIndex + 1], 'utf8'));
   else {
     // Start with a bounded Odense sample rather than an expensive nationwide request.
-    const query = '[out:json][timeout:35];nwr["amenity"~"^(restaurant|fast_food|cafe)$"]["name"](55.33,10.25,55.46,10.52);out center tags;';
+    const query = '[out:json][timeout:35];nwr["amenity"~"^(restaurant|fast_food|cafe)$"]["name"](55.33,10.25,55.46,10.52);out center body;';
     // curl preserves the managed environment's HTTPS proxy and CA configuration.
     const {stdout} = await promisify(execFile)('curl',[
       '--fail','--silent','--show-error','--max-time','50',
