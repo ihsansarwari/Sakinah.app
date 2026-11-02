@@ -20,7 +20,7 @@ const modulePath=process.env.PLAYWRIGHT_MODULE || '/tmp/sakinah-browser/node_mod
 const {chromium}=await import(pathToFileURL(modulePath).href);
 const catalog=JSON.parse(await readFile(resolve(root,'data/restaurants.osm.json'),'utf8'));
 assert.ok(catalog.restaurants.length>0,'The browser smoke test requires a nonempty real catalog.');
-const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json'};
+const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png'};
 const server=http.createServer(async(req,res)=>{
   try {
     const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -55,6 +55,7 @@ try {
   await page.locator('.restaurant').first().waitFor();
   assert.ok(await page.locator('.restaurant').count()>0,'The GitHub Pages subpath must load restaurant cards.');
   assert.equal(await page.locator('body').evaluate(element=>getComputedStyle(element).backgroundColor)!=='rgba(0, 0, 0, 0)',true,'Stylesheet must load under a repository subpath.');
+  assert.ok(await page.locator('header .brand-logo').evaluate(img=>img.complete && img.naturalWidth>0),'The new logo must load under the Pages subpath.');
   const favorite=page.locator('[data-favorite]').first();
   if(await favorite.count()) {
     const id=await favorite.getAttribute('data-favorite');

@@ -2,7 +2,7 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root = new URL('./', import.meta.url);
-const files = { '/src/discovery.js': ['src/discovery.js', 'text/javascript'], '/src/food-photos.js': ['src/food-photos.js', 'text/javascript'], '/': ['index.html', 'text/html'], '/src/app.js': ['src/app.js', 'text/javascript'], '/src/style.css': ['src/style.css', 'text/css'], '/src/data.js': ['src/data.js', 'text/javascript'], '/src/catalog.js': ['src/catalog.js', 'text/javascript'], '/data/restaurants.osm.json': ['data/restaurants.osm.json', 'application/json'] };
+const files = { '/assets/good-logo.png': ['assets/good-logo.png', 'image/png'], '/src/discovery.js': ['src/discovery.js', 'text/javascript'], '/src/food-photos.js': ['src/food-photos.js', 'text/javascript'], '/': ['index.html', 'text/html'], '/src/app.js': ['src/app.js', 'text/javascript'], '/src/style.css': ['src/style.css', 'text/css'], '/src/data.js': ['src/data.js', 'text/javascript'], '/src/catalog.js': ['src/catalog.js', 'text/javascript'], '/data/restaurants.osm.json': ['data/restaurants.osm.json', 'application/json'] };
 http.createServer(async (req, res) => {
   const file = files[new URL(req.url, 'http://localhost').pathname];
   if (!file) { res.writeHead(404); res.end('Ikke fundet'); return; }
