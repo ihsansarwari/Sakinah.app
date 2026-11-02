@@ -60,3 +60,9 @@ test('kvalitetsrapport tæller kun eksplicit verificeret halal, ikke kildepåsta
   ];
   assert.equal(qualitySummary(records).verifiedHalal,1);
 });
+
+test('udelukker dagligvarebutikker men bevarer egentlige spisesteder i varehuse',()=>{
+  const item=(id,name,shop)=>({type:'node',id,tags:{amenity:'fast_food',name,...(shop?{shop}:{})}});
+  const result=convert({elements:[item(13116975572,'365discount Odense, Albanigade'),item(91,'Dagligvarer','supermarket'),item(92,'Nærbutik','convenience'),item(93,'Bilka Bistro')]});
+  assert.deepEqual(result.map(r=>r.name),['Bilka Bistro']);
+});

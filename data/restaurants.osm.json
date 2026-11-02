@@ -14,15 +14,15 @@
     "administrativeBoundary": false
   },
   "quality": {
-    "total": 426,
+    "total": 425,
     "withCuisine": 267,
     "withAddress": 0,
     "withCity": 0,
-    "withCoordinates": 426,
-    "withWebsite": 215,
+    "withCoordinates": 425,
+    "withWebsite": 214,
     "withMenu": 7,
     "withPhone": 156,
-    "withOpeningHours": 200,
+    "withOpeningHours": 199,
     "requiringDuplicateReview": 22,
     "verifiedHalal": 0,
     "categories": {
@@ -34,7 +34,7 @@
       "asian": 28,
       "cafe": 87,
       "danish": 12,
-      "other": 164
+      "other": 163
     }
   },
   "restaurants": [
@@ -18231,52 +18231,6 @@
       "source": {
         "name": "OpenStreetMap",
         "url": "https://www.openstreetmap.org/node/13116975571",
-        "license": "ODbL 1.0",
-        "importedAt": "2026-10-31T22:52:09.653Z",
-        "snapshotAt": "2026-10-31T22:16:06Z",
-        "reportedCheckDate": null
-      },
-      "reportedHalal": null,
-      "photoReference": null,
-      "verification": "unverified",
-      "duplicateCandidates": []
-    },
-    {
-      "id": "osm-node-13116975572",
-      "name": "365discount Odense, Albanigade",
-      "city": "By ikke oplyst",
-      "coordinates": {
-        "lat": 55.3934547,
-        "lon": 10.3957787
-      },
-      "coordinateSource": "osm-node",
-      "area": "Adresse ikke oplyst",
-      "cuisineRaw": null,
-      "cuisineTags": [],
-      "cuisine": "Køkken ikke oplyst",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "categoryLabel": "Øvrige",
-      "price": "Pris ikke oplyst",
-      "amenity": "fast_food",
-      "website": "https://365discount.coop.dk/find-butik/365discount-odense-albanigade/24014/",
-      "menuUrl": null,
-      "phone": null,
-      "openingHours": "07:00-22:00",
-      "businessUnitReference": "1031383885",
-      "icon": "◒",
-      "color": "olive",
-      "description": "Grundoplysninger fra OpenStreetMap. Restaurantens aktuelle forhold er ikke kontrolleret af GOOD.",
-      "halal": null,
-      "alcohol": null,
-      "music": null,
-      "seating": null,
-      "prayer": null,
-      "source": {
-        "name": "OpenStreetMap",
-        "url": "https://www.openstreetmap.org/node/13116975572",
         "license": "ODbL 1.0",
         "importedAt": "2026-10-31T22:52:09.653Z",
         "snapshotAt": "2026-10-31T22:16:06Z",

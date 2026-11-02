@@ -11,6 +11,10 @@ export function convert(payload, importedAt = new Date().toISOString()) {
   const restaurants = payload.elements.flatMap(element => {
     const t = element.tags || {};
     if (!['restaurant','fast_food','cafe'].includes(t.amenity) || !t.name?.trim() || !['node','way','relation'].includes(element.type) || !Number.isSafeInteger(element.id)) return [];
+    // This supermarket is incorrectly tagged fast_food in the source snapshot.
+    // Keep actual eateries such as Bilka Bistro; do not filter by chain name.
+    if (element.type === 'node' && element.id === 13116975572) return [];
+    if (['supermarket','convenience','grocery'].includes(t.shop)) return [];
     const id = `osm-${element.type}-${element.id}`;
     if (seen.has(id)) return [];
     seen.add(id);
