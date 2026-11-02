@@ -26,7 +26,7 @@ export function convert(payload, importedAt = new Date().toISOString()) {
       phone:typeof (t.phone || t['contact:phone'])==='string' ? (t.phone || t['contact:phone']).trim() : null,
       openingHours:typeof t.opening_hours==='string' ? t.opening_hours : null,
       businessUnitReference:typeof t['ref:DK:cvr:pnummer']==='string' ? t['ref:DK:cvr:pnummer'] : null,
-      icon:'◒', color:'olive', description:'Grundoplysninger fra OpenStreetMap. Restaurantens aktuelle forhold er ikke kontrolleret af Sakinah.',
+      icon:'◒', color:'olive', description:'Grundoplysninger fra OpenStreetMap. Restaurantens aktuelle forhold er ikke kontrolleret af GOOD.',
       halal:null, alcohol:null, music:null, seating:null, prayer:null,
       source:{name:'OpenStreetMap',url:`https://www.openstreetmap.org/${element.type}/${element.id}`,license:'ODbL 1.0',importedAt,
         snapshotAt:payload.osm3s?.timestamp_osm_base || null,
@@ -54,7 +54,7 @@ async function main() {
     // curl preserves the managed environment's HTTPS proxy and CA configuration.
     const {stdout} = await promisify(execFile)('curl',[
       '--fail','--silent','--show-error','--max-time','50',
-      '--user-agent','SakinahPrototype/0.1',
+      '--user-agent','GOODPrototype/0.1',
       '--data-urlencode',`data=${query}`,
       'https://overpass-api.de/api/interpreter'
     ],{maxBuffer:20 * 1024 * 1024,timeout:55000});

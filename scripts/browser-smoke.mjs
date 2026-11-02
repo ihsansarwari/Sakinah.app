@@ -115,10 +115,20 @@ try {
     await mapButton.click();
     assert.equal(await dialog.locator('iframe[title]').count(),1,'The map control should create an accessible frame.');
   }
+  const reportURL=await dialog.locator('#report-link').inputValue();
+  assert.ok(new URL(reportURL).hash.startsWith('#restaurant='),'Report link must identify the restaurant.');
+  assert.match(await dialog.innerText(),/Restaurantens svar: ikke indhentet/,'Imported profiles must not imply restaurant participation.');
+  assert.equal(await dialog.locator('.evidence-detail').count(),5,'Every criterion needs its evidence status.');
+  const direct=await browser.newPage();
+  await direct.route('https://images.unsplash.com/**',route=>route.fulfill({status:404,body:''}));
+  await direct.goto(reportURL);
+  await direct.locator('dialog[open]').waitFor();
+  assert.equal(await direct.locator('#dialog-title').innerText(),await dialog.locator('#dialog-title').innerText(),'A scanned report link must open the same restaurant after a fresh load.');
+  await direct.close();
   await page.keyboard.press('Escape');
   assert.equal(await dialog.isVisible(),false,'Escape must dismiss the restaurant profile.');
 
-  await page.locator('#query').fill('sakinah-no-such-restaurant-unique-test');
+  await page.locator('#query').fill('tayyibah-no-such-restaurant-unique-test');
   await page.waitForFunction(()=>document.querySelectorAll('.restaurant').length===0);
   assert.ok(await page.locator('#results').innerText(),'A zero-result search must explain what happened.');
   const reset=page.locator('#reset');

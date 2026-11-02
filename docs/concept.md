@@ -1,10 +1,10 @@
-# Sakinah: et sted at vælge, før man går ud
+# GOOD: et sted at vælge, før man går ud
 
 ## Produktløftet
 
 **Find et godt sted at spise, og se hvad der faktisk er oplyst om mad og rammer.**
 
-Sakinah skal gøre valget lettere for muslimer med forskellige behov. En restaurantoversigt med tydelig dokumentation er første produkt; levering og betaling venter. Et indbydende udtryk kan inspireres af madplatforme, mens oplysningerne om halal-mad, alkohol, musik, afskærmning og bøn er den vigtigste forskel.
+GOOD skal gøre valget lettere for muslimer med forskellige behov. En restaurantoversigt med tydelig dokumentation er første produkt; levering og betaling venter. Et indbydende udtryk kan inspireres af madplatforme, mens oplysningerne om halal-mad, alkohol, musik, afskærmning og bøn er den vigtigste forskel.
 
 Den nuværende import er en bred oversigt over spisesteder i Odense-området. Den er **ikke** en liste over halal-restauranter: de importerede kriterier er ukendte. Importeret antal, dokumenteret status og brugerens præferencer skal holdes adskilt i både tekst og funktioner.
 
@@ -50,7 +50,7 @@ Først en lille, samtykkebaseret brugertest, eksempelvis med 5–8 personer. Tal
 - Hvilket kriterium ændrer restaurantvalget, og hvilke oplysninger mangler?
 - Gemmer personen et sted eller vælger en rute, og bruger personen siden igen i de følgende uger?
 
-Mål de konkrete handlinger frem for kun sidevisninger. Start eventuelt med interviews og frivillig tilbagemelding; der behøves ikke sporingssoftware i den første test. Bed restauranter om frivilligt at oplyse, om Sakinah skaber relevante henvendelser, før betaling for profiler overvejes. Fastlæg måltal efter en baseline frem for at opfinde vækstprognoser.
+Mål de konkrete handlinger frem for kun sidevisninger. Start eventuelt med interviews og frivillig tilbagemelding; der behøves ikke sporingssoftware i den første test. Bed restauranter om frivilligt at oplyse, om GOOD skaber relevante henvendelser, før betaling for profiler overvejes. Fastlæg måltal efter en baseline frem for at opfinde vækstprognoser.
 
 ## En realistisk rækkefølge
 

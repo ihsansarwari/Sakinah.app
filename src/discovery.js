@@ -32,5 +32,5 @@ export function sortRestaurants(items, order='name', saved=new Set()) {
   return [...items].sort((a,b)=>order==='saved' ? Number(saved.has(b.id))-Number(saved.has(a.id)) || compare(a,b) : order==='information' ? completeness(b)-completeness(a) || compare(a,b) : compare(a,b));
 }
 export function readFavorites(storage) {
-  try {const value=JSON.parse(storage.getItem('sakinah.favorites') || '[]');return new Set(Array.isArray(value)?value.filter(id=>typeof id==='string'):[]);} catch {return new Set();}
+  try {const value=JSON.parse(storage.getItem('tayyibah.favorites') ?? storage.getItem('sakinah.favorites') ?? '[]');return new Set(Array.isArray(value)?value.filter(id=>typeof id==='string'):[]);} catch {return new Set();}
 }

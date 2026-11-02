@@ -1,4 +1,4 @@
-# Sakinah
+# GOOD · طيّبة
 
 Dansk, responsiv prototype til at finde spisesteder ud fra personlige præferencer. Siden viser 426 importerede OpenStreetMap-poster fra Odense-området (restauranter, caféer og takeaway). Det er ikke en fuldstændig oversigt eller en liste over verificerede halal-restauranter. Adresser mangler i det aktuelle udtræk; åbning og drift er ikke kontrolleret.
 
@@ -53,3 +53,17 @@ Se [konceptforslaget](docs/concept.md) for prioritering af en Odense-pilot, doku
 Restaurantprofilerne har koordinater, kortvisning efter klik og links til stort OpenStreetMap-kort og rutevejledning. Kortet er et geografisk kort, ikke et gadefoto. OSM-midtpunkter kan afvige fra indgangen. En enkelt Commons-billedhenvisning vises som et eksternt link. Google Street View-integrationen er fjernet.
 
 Der er endnu ingen database, login eller administrationsside. Før offentlig lancering kræves kilde og kontroldato pr. kriterium, dokumentation af halal-forhold, proces til rettelser og verificering samt en særskilt beslutning om en eventuel samlet rating. Mobilversionen er en responsiv hjemmeside; der er endnu ingen native app.
+
+## Tayyibah-rapport og faste profillinks
+
+Restaurantprofiler har faste links med `#restaurant=<OSM-id>`. Linket åbner den konkrete rapport direkte, også efter genindlæsning, og kan kopieres fra profilen og bruges som mål i en QR-kode. QR-billeder og fysiske klistermærker genereres endnu ikke. Brug den offentlige, publicerede adresse til trykte QR-koder; et localhost-link virker kun lokalt.
+
+Rapporten adskiller restaurantens deltagelse fra restaurantens svar, brugerobservationer og gennemgået dokumentation. De nuværende importerede profiler har ingen registreret deltagelse, indsendte svar, brugerobservationer eller dokumentationsgennemgang. Hvert kriterium viser derfor manglende grundlag, kilde, kontroldato og omfang. Der er endnu ingen indsendelse, moderation eller login; eksisterende katalogdata ændres ikke til verificerede oplysninger.
+
+## Navneskift til Tayyibah
+
+Brand, rapporter og pakkenavn bruger Tayyibah. Repositoryets eksisterende mappe og GitHub Pages-sti hedder stadig `Sakinah.app`, så publicerede links bevares. De ændres først ved en særskilt omdøbning af repository/hosting. Favoritter læses fra den tidligere lagernøgle, hvis den nye endnu ikke findes; fremtidige ændringer gemmes under `tayyibah.favorites`.
+
+## GOOD · طيّبة
+
+Det synlige brand er GOOD med arabisk طيّبة (Tayyibah) og den danske tekst “God mad. Godt at vide.” Rapporter hedder GOOD-rapporter. Pakke- og lagernøgler bruger fortsat `tayyibah` for kontinuitet; eksisterende GitHub Pages-sti er uændret.

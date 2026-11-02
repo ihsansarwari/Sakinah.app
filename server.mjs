@@ -8,4 +8,4 @@ http.createServer(async (req, res) => {
   if (!file) { res.writeHead(404); res.end('Ikke fundet'); return; }
   try { const body = await readFile(fileURLToPath(new URL(file[0], root))); res.writeHead(200, {'Content-Type': `${file[1]}; charset=utf-8`, 'X-Content-Type-Options': 'nosniff'}); res.end(body); }
   catch { res.writeHead(500); res.end('Kunne ikke indlæse siden'); }
-}).listen(Number(process.env.PORT || 3000), '0.0.0.0', () => console.log('Sakinah kører på port ' + (process.env.PORT || 3000)));
+}).listen(Number(process.env.PORT || 3000), '0.0.0.0', () => console.log('GOOD kører på port ' + (process.env.PORT || 3000)));

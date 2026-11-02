@@ -371,3 +371,29 @@ dialog p { color: var(--muted); font-size: 12px; line-height: 1.85; }
 .principles > p:not(.eyebrow) { color: #56664f; }
 .principle-grid article > span { color: #aa492b; }
 .principle-grid p { color: #56664f; }
+
+/* Reports keep participation separate from evidence. */
+.report-intro { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--mint); }
+.report-intro h3 { margin-top: 0; font-size: 19px; }
+.report-sources { display: grid; gap: 8px; font-size: 12px; line-height: 1.7; }
+.report-sources span { padding-top: 8px; border-top: 1px solid #d4dfce; }
+.report-link-label { display: block; margin-bottom: 8px; font-size: 12px; line-height: 1.7; font-weight: 650; }
+.report-share { display: flex; flex-wrap: wrap; gap: 10px; }
+.report-share input { flex: 1; min-width: 0; width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--ink); font-size: 12px; }
+.report-share button { min-height: 44px; }
+.report-heading { margin-top: 28px; }
+.detail-list .evidence-detail { padding-top: 8px; color: #687158; }
+.restaurant-participation { background: #f8f3e8; }
+@media(max-width:500px) { .report-share input { flex-basis: 100%; } .detail-list > div { gap: 10px; } }
+
+/* GOOD / Tayyibah bilingual wordmark. Arabic keeps its natural reading order. */
+.brand { gap: 12px; letter-spacing: 0; white-space: nowrap; }
+.brand-arabic { font-family: "Geeza Pro", "Noto Naskh Arabic", "Traditional Arabic", Arial, sans-serif; font-size: 38px; font-weight: 700; line-height: 1.5; letter-spacing: 0; }
+.brand-divider { color: #8b9d7c; font-size: 22px; font-weight: 400; }
+.brand-english { font-size: 28px; font-weight: 850; letter-spacing: -1.5px; }
+.brand-english .brand-dot { margin-left: 1px; }
+.hero .eyebrow { letter-spacing: 1.5px; }
+footer .brand-arabic { font-size: 32px; }
+footer .brand-english { font-size: 24px; }
+@media(max-width:700px) { header { gap: 12px; } .brand { gap: 8px; } .brand-arabic { font-size: 32px; } .brand-english { font-size: 25px; } nav { gap: 12px; } }
+@media(max-width:359px) { .brand { gap: 6px; } .brand-arabic { font-size: 28px; } .brand-english { font-size: 23px; } }
