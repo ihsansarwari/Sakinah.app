@@ -1,6 +1,6 @@
 # GOOD · طيّبة
 
-Dansk, responsiv prototype til at finde spisesteder ud fra personlige præferencer. Siden viser 425 importerede OpenStreetMap-poster fra Odense-området (restauranter, caféer og takeaway). Det er ikke en fuldstændig oversigt eller en liste over verificerede halal-restauranter. Adresser mangler i det aktuelle udtræk; åbning og drift er ikke kontrolleret.
+Dansk, responsiv prototype til at finde spisesteder ud fra personlige præferencer. Siden viser 308 synlige OpenStreetMap-poster fra Odense-området (restauranter, caféer og takeaway). Det er ikke en fuldstændig oversigt eller en liste over verificerede halal-restauranter. Adresser mangler i det aktuelle udtræk; åbning og drift er ikke kontrolleret.
 
 ## Online med GitHub Pages
 
@@ -44,7 +44,7 @@ Websiden indlæser `data/restaurants.osm.json`. Importen opdaterer dette katalog
 
 Kør `node scripts/browser-smoke.mjs` for browserkontrol af den præcise Pages-undermappe, søgning, kategorier, lokale favoritter, sortering, profiler, kort, nulstilling og mobilbredder. Playwright installeres separat i `/tmp/sakinah-browser` (se scriptets vejledning); det er ikke en produktionsafhængighed. Eksterne billed- og kortsvar simuleres og dokumenterer ikke tjenesternes aktuelle tilgængelighed.
 
-Kataloget har stadig 425 OSM-poster. Berigelsen bevarer rå køkkenværdier og kildens snapshotdato; kategorierne oversættes til dansk. Der findes 214 hjemmesidelinks, 7 menulinks, 156 telefonfelter og 199 åbningstidsfelter. 22 poster er markeret som mulige dubletter til manuel gennemgang, men ingen er fjernet automatisk. Disse oplysninger er ikke bekræftet med restauranterne.
+Kataloget bevarer 425 OSM-poster, hvoraf 308 vises og 117 afventer gennemgang. Berigelsen bevarer rå køkkenværdier og kildens snapshotdato; kategorierne oversættes til dansk. Der findes 161 hjemmesidelinks, 7 menulinks, 125 telefonfelter og 156 åbningstidsfelter. 22 poster er markeret som mulige dubletter og gemt til manuel gennemgang uden for hovedoversigten. Ingen er slettet eller sammenlagt automatisk. Disse oplysninger er ikke bekræftet med restauranterne.
 
 Se [konceptforslaget](docs/concept.md) for prioritering af en Odense-pilot, dokumentation pr. kriterium og en plan for brugertest. Det er forslag, ikke observerede brugerresultater.
 
@@ -69,3 +69,9 @@ Brand, rapporter og pakkenavn bruger Tayyibah. Repositoryets eksisterende mappe 
 Det synlige brand er GOOD med arabisk طيّبة (Tayyibah) og den danske tekst “God mad. Godt at vide.” Rapporter hedder GOOD-rapporter. Pakke- og lagernøgler bruger fortsat `tayyibah` for kontinuitet; eksisterende GitHub Pages-sti er uændret.
 
 Kataloget udelukker dagligvarebutikker. Den fejlregistrerede 365discount-post på Albanigade er fjernet og undtages ved import. Spisesteder i varehuse, fx Bilka Bistro, bevares. Importen afviser også poster med butikstyperne supermarket, convenience og grocery.
+
+## Afgrænsning af hovedoversigten
+
+Hovedoversigten indeholder 308 poster. Yderligere 117 af de oprindelige 425 poster bevares med kildeoplysninger og individuel begrundelse under `reviewRestaurants` i katalogfilen. De vises ikke i søgning, optællinger eller profiler. Det er en redaktionel afgrænsning, ikke en påstand om halal-status, lukning eller manglende offentlig adgang.
+
+`scripts/catalog-scope.mjs` bruges både ved import og oprydning: institutioner/aktivitetssteder, kroer/hotelprofiler, mulige dubletter, barprægede steder uden oplyste måltider og caféer uden et oplyst måltidstilbud sættes til gennemgang. En café med fx sandwich, brunch eller burger kan blive. Mulige dubletter slettes eller sammenlægges ikke automatisk. Kildeklassifikation kan være ufuldstændig; poster kan genoptages efter manuel kontrol. Ingen steder er erklæret lukkede uden kildegrundlag.

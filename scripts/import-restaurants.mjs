@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve, dirname } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import {partitionCatalog} from './catalog-scope.mjs';
 import {cuisineDetails, publicWebsite, validCoordinates, markDuplicateCandidates, qualitySummary} from './restaurant-quality.mjs';
 
 export function convert(payload, importedAt = new Date().toISOString()) {
@@ -25,6 +26,8 @@ export function convert(payload, importedAt = new Date().toISOString()) {
       area:[t['addr:street'],t['addr:housenumber']].filter(Boolean).join(' ') || 'Adresse ikke oplyst',
       ...cuisineDetails(t.cuisine,t.amenity), price:'Pris ikke oplyst',
       amenity:t.amenity,
+      shop:t.shop || null, access:t.access || null,
+      lifecycle:t.disused === 'yes' || t.closed === 'yes' ? 'closed' : null,
       website:publicWebsite(t.website || t['contact:website']),
       menuUrl:publicWebsite(t['website:menu'] || t['contact:menu']),
       phone:typeof (t.phone || t['contact:phone'])==='string' ? (t.phone || t['contact:phone']).trim() : null,
@@ -64,8 +67,10 @@ async function main() {
     ],{maxBuffer:20 * 1024 * 1024,timeout:55000});
     payload = JSON.parse(stdout);
   }
-  const restaurants = convert(payload);
-  if (!restaurants.length) throw new Error('Ingen brugbare restauranter; eksisterende data bevares.');
+  const records = convert(payload);
+  if (!records.length) throw new Error('Ingen brugbare restauranter; eksisterende data bevares.');
+  const {restaurants,reviewRestaurants} = partitionCatalog(records);
+  if (!restaurants.length) throw new Error('Ingen steder til hovedoversigten; eksisterende data bevares.');
   const destination = resolve(output);
   await mkdir(dirname(destination), {recursive:true});
   await writeFile(destination + '.tmp', JSON.stringify({
@@ -75,10 +80,11 @@ async function main() {
     scope:'Uverificerede grundoplysninger. Ingen garanti for fuldstændighed eller halal-status.',
     queryArea:{name:'Odense-området',bbox:[55.33,10.25,55.46,10.52],administrativeBoundary:false},
     quality:qualitySummary(restaurants),
-    restaurants
+    restaurants,
+    reviewRestaurants
   }, null, 2) + '\n');
   await rename(destination + '.tmp', destination);
-  console.log(`${restaurants.length} restaurantposter gemt i ${output}. Halal og øvrige kriterier er ukendte indtil verificering.`);
+  console.log(`${restaurants.length} restaurantposter gemt i ${output}; ${reviewRestaurants.length} gemt til gennemgang. Halal og øvrige kriterier er ukendte indtil verificering.`);
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().catch(error => { console.error(error.message); process.exitCode = 1; });

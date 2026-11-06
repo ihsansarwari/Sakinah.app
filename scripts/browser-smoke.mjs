@@ -56,6 +56,11 @@ try {
   assert.ok(await page.locator('.restaurant').count()>0,'The GitHub Pages subpath must load restaurant cards.');
   assert.equal(await page.locator('body').evaluate(element=>getComputedStyle(element).backgroundColor)!=='rgba(0, 0, 0, 0)',true,'Stylesheet must load under a repository subpath.');
   assert.ok(await page.locator('header .brand-logo').evaluate(img=>img.complete && img.naturalWidth>0),'The new logo must load under the Pages subpath.');
+  for (const hiddenName of ['4050 SDU - Near By Coffee 1','Blommenslyst Kro']) {
+    await page.locator('#query').fill(hiddenName);
+    assert.equal(await page.locator('.restaurant').count(),0,'Review-only records must not appear in search: '+hiddenName);
+  }
+  await page.locator('#query').fill('');
   const favorite=page.locator('[data-favorite]').first();
   if(await favorite.count()) {
     const id=await favorite.getAttribute('data-favorite');
